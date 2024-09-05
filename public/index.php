@@ -13,33 +13,44 @@
     <div class="w-full h-screen bg-primary">
 
         <!-- Authentication Page -->
-        <div id="auth" class="flex justify-center items-end h-full bg-secondary">
-            <div id="auth-wrapper-signup" class="h-[50rem] w-full bg-primary px-4 py-6 flex justify-center items-center flex-col" style="border-top-right-radius: 20px;border-top-left-radius: 20px; ">
-                <h1 class="font-semibold text-3xl font-font1 text-center text-secondary mb-8">SIGN UP</h1>
-                <form action="#" class="w-[80%]">
-                    <label for="name" class="block mr-2 mt-4 mb-2 text-gray-500">Name:</label>
-                    <input type="text" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="name" autocomplete="off">
-                    <label for="username" class="block mr-2 mt-4 mb-2 text-gray-500">Username:</label>
-                    <input type="text" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="username" autocomplete="off">
-                    <label for="id-number" class="block mr-2 mt-4 mb-2 text-gray-500">ID Number:</label>
-                    <input type="number" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="id-number" autocomplete="off">
-                    <label for="password" class="block outline-none mr-2 mt-4 mb-2 text-gray-500">Password:</label>
-                    <input type="password" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="password" autocomplete="off">
-                    <input type="submit" value="Submit" name="submit" class="w-full bg-secondary text-primary rounded-md h-[3rem] mt-8 cursor-pointer transmission hover:border hover:border-secondary hover:bg-transparent hover:text-secondary">
-                </form>
-                <p class="mt-4 text-sm text-gray-500">Already have an account? <button id="login" class="text-secondary underline">Login</button></p>
+        <div class="auth-wrapper">
+
+            <!-- Sign Up -->
+            <div class="signup-wrapper bg-secondary w-full h-screen grid items-end md:items-center">
+                <div class="auth-form-wrapper grid md:grid-cols-2 bg-primary w-full md:w-[80vw] md:rounded-br-xl md:rounded-bl-xl xl:w-[60vw] mx-auto h-[70vh] rounded-tr-2xl rounded-tl-2xl md:shadow-xl">
+                    <div class="hero hidden h-full md:block md:w-full bg-center bg-cover rounded-bl-2xl rounded-tl-2xl">
+                    </div>
+                    <form action="#" class="w-[70vw] md:w-[80%] m-2 mx-auto mt-[3rem]">
+                        <h1 class="text-2xl text-secondary font-bold mb-8">SIGN UP</h1>
+                        <label for="su_name" class="block text-gray-500 mr-2 mb-2">Name:</label>
+                        <input type="text" id="su_name" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <label for="su_username" class="block text-gray-500 mr-2 mb-2">Username:</label>
+                        <input type="text" id="su_username" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <label for="su_id" class="block text-gray-500 mr-2 mb-2">Student ID:</label>
+                        <input type="text" id="su_id" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <label for="su_password" class="block text-gray-500 mr-2 mb-2">Password:</label>
+                        <input type="password" id="su_password" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <input type="submit" value="Sign Up" class="block w-full h-12 text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">
+                        <p class="text-sm text-center mt-2">Already have an account? <span id="login" class="underline text-secondary cursor-pointer">Login</span></p>
+                    </form>
+                </div>
             </div>
 
-            <div id="auth-wrapper-login" class="h-[50rem] w-full bg-primary px-4 py-6 hidden justify-center items-center flex-col" style="border-top-right-radius: 20px;border-top-left-radius: 20px; ">
-                <h1 class="font-semibold text-3xl font-font1 text-center text-secondary mb-8">LOG IN</h1>
-                <form action="#" class="w-[80%]">
-                    <label for="username" class="block mr-2 mt-4 mb-2 text-gray-500">Username:</label>
-                    <input type="text" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="username" autocomplete="off">
-                    <label for="password" class="block outline-none mr-2 mt-4 mb-2 text-gray-500">Password:</label>
-                    <input type="password" class="block outline-none w-full h-[3rem] p-2 rounded-md" id="password" autocomplete="off">
-                    <input type="submit" value="Submit" name="submit" class="w-full bg-secondary text-primary rounded-md h-[3rem] mt-8 cursor-pointer transmission hover:border hover:border-secondary hover:bg-transparent hover:text-secondary">
-                </form>
-                <p class="mt-4 text-sm text-gray-500">Don't have an account yet? <button id="signup" class="text-secondary underline">Sign Up</button></p>
+            <!-- Log In -->
+            <div class="login-wrapper bg-secondary w-full h-screen hidden items-end md:items-center">
+                <div class="auth-form-wrapper grid md:grid-cols-2 bg-primary w-full md:w-[80vw] md:rounded-br-xl md:rounded-bl-xl xl:w-[60vw] mx-auto h-[70vh] rounded-tr-2xl rounded-tl-2xl md:shadow-xl">
+                    <div class="hero hidden h-full md:block md:w-full bg-center bg-cover rounded-bl-2xl rounded-tl-2xl">
+                    </div>
+                    <form action="#" class="w-[70vw] md:w-[80%] m-2 mx-auto mt-[8rem]">
+                        <h1 class="text-2xl text-secondary font-bold mb-8">LOG IN</h1>
+                        <label for="li_username" class="block text-gray-500 mr-2 mb-2">Username:</label>
+                        <input type="text" id="li_username" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <label for="li_password" class="block text-gray-500 mr-2 mb-2">Password:</label>
+                        <input type="password" id="li_password" class="block w-full h-12 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4">
+                        <input type="submit" value="Login" class="block w-full h-12 text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">
+                        <p class="text-sm text-center mt-2">Don't have an account yet? <span id="signup" class="underline text-secondary cursor-pointer">Sign Up</span></p>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -48,29 +59,30 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
 
             // AUTHENTICATION
 
-            $("#login").on("click", function(){
+            $("#login").on("click", function() {
                 showLogin();
             })
 
-            $("#signup").on("click", function(){
+            $("#signup").on("click", function() {
                 showSignUp();
             })
 
-            function showLogin (){
-                $("#auth-wrapper-signup").removeClass("flex");
-                $("#auth-wrapper-signup").addClass("hidden");
-                $("#auth-wrapper-login").removeClass("hidden");
-                $("#auth-wrapper-login").addClass("flex");
+            function showLogin() {
+                $(".signup-wrapper").removeClass("grid");
+                $(".signup-wrapper").addClass("hidden");
+                $(".login-wrapper").removeClass("hidden");
+                $(".login-wrapper").addClass("grid");
             }
-            function showSignUp(){
-                $("#auth-wrapper-login").removeClass("flex");
-                $("#auth-wrapper-login").addClass("hidden");
-                $("#auth-wrapper-signup").removeClass("hidden");
-                $("#auth-wrapper-signup").addClass("flex");
+
+            function showSignUp() {
+                $(".login-wrapper").removeClass("grid");
+                $(".login-wrapper").addClass("hidden");
+                $(".signup-wrapper").removeClass("hidden");
+                $(".signup-wrapper").addClass("grid");
             }
         })
     </script>
