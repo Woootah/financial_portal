@@ -603,10 +603,6 @@ video {
   margin-top: 3rem;
 }
 
-.mt-\[4rem\]{
-  margin-top: 4rem;
-}
-
 .mt-\[8rem\]{
   margin-top: 8rem;
 }
@@ -625,6 +621,10 @@ video {
 
 .h-12{
   height: 3rem;
+}
+
+.h-8{
+  height: 2rem;
 }
 
 .h-\[70vh\]{
@@ -710,6 +710,10 @@ video {
   text-align: center;
 }
 
+.font-font1{
+  font-family: Outfit;
+}
+
 .font-font2{
   font-family: Poppins;
 }
@@ -722,6 +726,16 @@ video {
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold{
@@ -741,6 +755,11 @@ video {
 .text-secondary{
   --tw-text-opacity: 1;
   color: rgb(0 50 159 / var(--tw-text-opacity));
+}
+
+.text-red-500{
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .underline{
