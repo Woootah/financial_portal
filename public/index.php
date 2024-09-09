@@ -3,8 +3,6 @@
 
     session_start();
 
-    // var_dump($_POST);
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(empty($_POST['username']) || empty($_POST['password'])){
             echo json_encode(["status" => "error" , "message" => "Fill required fields"]);
@@ -13,7 +11,6 @@
 
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
-        $enc_passwd = password_hash($password, PASSWORD_DEFAULT);
 
         $qry = $conn->prepare("SELECT * FROM users WHERE username = ?");
         $qry->bind_param("s", $username);
@@ -24,7 +21,7 @@
             $row = $res->fetch_assoc();
 
             if(password_verify($password, $row['password'])){
-                $_SESSION['username'] = $username; 
+                $_SESSION['username'] = $username;
                 echo json_encode(["status" => "success" , "message" => "Login successful"]);
             }
             else {
@@ -32,7 +29,7 @@
             }
         }
         else{
-            echo json_encode(["status" => "success" , "message" => "Invalid username or password"]);
+            echo json_encode(["status" => "error" , "message" => "Invalid username or password"]);
         }
         exit;
     }
@@ -60,13 +57,13 @@
                 <div class="auth-form-wrapper grid md:grid-cols-2 bg-primary w-full md:w-[80vw] md:rounded-br-xl md:rounded-bl-xl xl:w-[60vw] mx-auto h-[70vh] rounded-tr-2xl rounded-tl-2xl md:shadow-xl">
                     <div class="hero hidden h-full md:block md:w-full bg-center bg-cover rounded-bl-2xl rounded-tl-2xl" style="background-image: url('./image/hero1.jpg')">
                     </div>
-                    <form id ="login-form" action=<?php echo $_SERVER['PHP_SELF']; ?> class="w-[70vw] md:w-[80%] mx-auto" style="margin-top: 4rem;">
+                    <form id ="login-form" action=<?php echo $_SERVER['PHP_SELF']; ?> class="w-[70vw] md:w-[80%] mx-auto" style="margin-top: 5rem;">
                         <h1 class="text-2xl text-secondary font-bold mb-8 font-font1">LOG IN</h1>
                         <p id="error-msg" class="hidden text-red-500 text-sm">hello</p>
-                        <input type="text" id="username" name="username" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Username" required>
-                        <input type="password" id="password" name="password" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Password" required>
-                        <input type="submit" id="login" value="Login" name="login" class="block w-full h-4 text-[12px] text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">
-                        <p class="text-sm text-center text-gray-500 mt-2">Don't have an account yet? <a href="./signup.php" class="underline text-secondary cursor-pointer">Sign Up</a></p>
+                        <input type="text" id="username" name="username" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Username" required>
+                        <input type="password" id="password" name="password" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Password" required>
+                        <input type="submit" id="login" value="Login" name="login" class="block w-full h-8 text-[12px] text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">
+                        <p class="text-xs text-center text-gray-500 mt-2">Don't have an account yet? <a href="./signup.php" class="underline text-secondary cursor-pointer">Sign Up</a></p>
                     </form>
                 </div>
             </div>
@@ -124,6 +121,7 @@
 
                 request.done(function(res) {
                     let msg = JSON.parse(res);
+                    console.log(msg);
                     if(msg.status == "error"){
                         showError(msg.message);
                         setTimeout(hideError, 2000);

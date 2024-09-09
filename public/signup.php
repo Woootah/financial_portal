@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ASCB FiPo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -62,15 +62,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="auth-form-wrapper grid md:grid-cols-2 bg-primary w-full md:w-[80vw] md:rounded-br-xl md:rounded-bl-xl xl:w-[60vw] mx-auto h-[70vh] rounded-tr-2xl rounded-tl-2xl md:shadow-xl">
                 <div class="hero hidden h-full md:block md:w-full bg-center bg-cover rounded-bl-2xl rounded-tl-2xl transmission" style="background-image: url('./image/hero1.jpg')">
                 </div>
-                <form id="signup-form" class="w-[70vw] md:w-[80%] m-2 mx-auto mt-[3rem]">
+                <form id="signup-form" class="w-[70vw] md:w-[80%] m-2 mx-auto" style="margin-top: 4rem; ">
                     <h1 class="text-2xl text-secondary font-bold mb-4 font-font1">SIGN UP</h1>
                     <p id="error-msg" class="text-red-500 text-sm hidden"></p>
-                    <input type="text" id="su_name" name="name" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Name" required>
-                    <input type="text" id="su_username" name="username" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Username" required>
-                    <input type="text" id="su_id" name="id" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Student ID" required>
-                    <input type="password" id="su_password" name="password" class="block w-full h-4 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Password" required>
-                    <button value="Sign Up" id="signup" name="signup" class="block w-full h-4 text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">Sign Up</button>
-                    <p class="text-sm text-center mt-2">Already have an account? <a href="./index.php" class="underline text-secondary cursor-pointer">Login</a></p>
+                    <input type="text" id="su_name" name="name" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm" placeholder="Name" required>
+                    <input type="text" id="su_username" name="username" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Username" required>
+                    <input type="text" id="su_id" name="id" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Student ID" required>
+                    <input type="password" id="su_password" name="password" class="block w-full h-8 border border-secondary bg-transparent rounded-md outline-none p-2 mb-4 placeholder:text-sm"" placeholder=" Password" required>
+                    <input type="submit" value="Sign Up" id="signup" name="signup" class="block w-full h-8 text-sm text-primary bg-secondary border rounded-md p-2 mt-8 transmission hover:bg-transparent hover:text-secondary hover:border-secondary cursor-pointer">
+                    <p class="text-xs text-center mt-2">Already have an account? <a href="./index.php" class="underline text-secondary cursor-pointer">Login</a></p>
                 </form>
             </div>
         </div>

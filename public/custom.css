@@ -1,9 +1,85 @@
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.nav {
+    display: none;
+}
+
+.balance-wrapper {
+  display: grid;
+  grid-template-areas:
+    "profile balance recent"
+    "profile upcoming recent"
+    "profile upcoming recent";
+  grid-template-columns: 0.5fr 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 1rem;
+}
+
+.profile {
+  grid-area: profile;
+}
+
+.balance {
+  grid-area: balance;
+}
+
+.upcoming {
+  grid-area: upcoming;
+}
+
+.recent {
+  grid-area: recent;
+}
+
+.upcoming::-webkit-scrollbar,
+.recent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.upcoming::-webkit-scrollbar-track,
+.recent::-webkit-scrollbar-track {
+  width: 4px;
+  margin: 1rem 0;
+}
+
+.upcoming::-webkit-scrollbar-thumb,
+.recent::-webkit-scrollbar-thumb {
+  background-color: blue;
+  border-radius: 50px;
+}
+
+.balance-wrapper, .profile, .balance, .upcoming, .recent {
+    z-index: 1;
+}
+
+.nav {
+    z-index: 10;
+}
+.nav.show {
+    display: block; /* Show nav when toggled */
+  }
+
+@media screen and (max-width: 770px) {
+  .balance-wrapper {
+    grid-template-areas:
+      "profile"
+      "balance"
+      "upcoming"
+      "recent";
+    grid-template-columns: 1fr; /* Single column */
+  }
+
+  .nav {
+    display: none;
+  }
+
+
 }
