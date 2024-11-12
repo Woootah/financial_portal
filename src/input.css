@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,5 +8,9 @@
 @layer components{
     .transmission{
         @apply transition ease-in-out duration-200;
+    }
+
+    .active {
+        @apply bg-primary text-secondary;
     }
 }

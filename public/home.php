@@ -54,7 +54,7 @@ if(isset($_POST['logout'])){
             <p class="text-xs md:text-sm text-gray-400">Total Tuition Balance</p>
             <p class="text-2xl font-bold mt-1 md:text-5xl md:mt-4">$5,000</p>
             <div class="action-btn mt-2 md:mt-8 md:absolute bottom-4">
-                <button class="text-xs border border-primary md:border-secondary px-3 py-1 md:px-4 md:py-2 rounded-md transmission hover:bg-primary md:hover:bg-secondary md:hover:text-primary hover:text-secondary mr-2">Pay Now</button>
+                <button id="pay" class="text-xs border border-primary md:border-secondary px-3 py-1 md:px-4 md:py-2 rounded-md transmission hover:bg-primary md:hover:bg-secondary md:hover:text-primary hover:text-secondary mr-2">Pay Now</button>
             </div>
         </div>
         <!-- UPCOMING PAYMENTS -->
@@ -228,6 +228,11 @@ if(isset($_POST['logout'])){
             $(".exit-btn").on("click", function() {
                 $(".nav").removeClass("show");
             });
+
+            // PAY
+            $("#pay").on('click', function(){
+                window.location.replace("http://localhost/hustle/financial_portal/public/payment.php");
+            })
 
             // LOGOUT
             $(".logout").on("click", function(){

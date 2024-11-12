@@ -10,7 +10,7 @@ module.exports = {
         },
         fontFamily: {
             font1: "Outfit",
-            font2: "Poppins"
+            font2: "Space Grotesk"
         }
       },
     },

@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
     $enc_passwd = password_hash($password, PASSWORD_DEFAULT);
+    $role = 'user';
 
     $qry = $conn->prepare("SELECT * FROM users WHERE student_id = ? OR username = ?");
     $qry->bind_param("is", $student_id, $username);
@@ -26,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $res = $qry->get_result();
 
     if ($res->num_rows == 0) {
-        $qry = $conn->prepare("INSERT INTO `users`(`student_id`, `name`, `username`, `password`) VALUES (?, ?, ?, ?)");
-        $qry->bind_param("isss", $student_id, $name, $username, $enc_passwd);
+        $qry = $conn->prepare("INSERT INTO `users`(`student_id`, `name`, `username`, `password`, `roles`) VALUES (?, ?, ?, ?, ?)");
+        $qry->bind_param("issss", $student_id, $name, $username, $enc_passwd, $role);
         $insert_result = $qry->execute();
 
         echo $insert_result == 1 ? json_encode(["status" => "success", "message" => "Signup Successful"]) : null;

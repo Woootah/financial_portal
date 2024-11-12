@@ -22,7 +22,9 @@
 
             if(password_verify($password, $row['password'])){
                 $_SESSION['username'] = $username;
-                echo json_encode(["status" => "success" , "message" => "Login successful"]);
+                $_SESSION['role'] = $row['roles'];
+                setcookie("username", $username, time() + (86400 * 30), "/");
+                echo json_encode(["status" => "success" , "message" => "Login successful", "role" => $_SESSION['role']]);
             }
             else {
                 echo json_encode(["status" => "error", "message" => "Invalid username or password"]);
@@ -121,10 +123,14 @@
 
                 request.done(function(res) {
                     let msg = JSON.parse(res);
-                    console.log(msg);
                     if(msg.status == "error"){
                         showError(msg.message);
                         setTimeout(hideError, 2000);
+                        return;
+                    }
+
+                    if(msg.role == 'admin'){
+                        window.location.replace("http://localhost/hustle/financial_portal/public/admin.php");
                     }
                     else{
                         window.location.replace("http://localhost/hustle/financial_portal/public/home.php");
