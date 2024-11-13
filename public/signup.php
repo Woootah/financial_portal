@@ -32,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $insert_result = $qry->execute();
 
         echo $insert_result == 1 ? json_encode(["status" => "success", "message" => "Signup Successful"]) : null;
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
+        setcookie("username", $username, time() + (86400 * 30), "/");
         exit;
     } else {
         $row = $res->fetch_assoc();
@@ -134,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         showError(msg.message);
                         setTimeout(hideError, 2000);
                     } else {
-                        window.location.replace("http://localhost/hustle/financial_portal/public/index.php");
+                        window.location.replace("http://localhost/hustle/financial_portal/public/home.php");
                     }
 
                 });

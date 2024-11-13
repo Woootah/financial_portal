@@ -7,7 +7,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-$students = $conn->query("SELECT * FROM students")->fetch_all(MYSQLI_ASSOC);
+$users = $conn->query("SELECT * FROM users WHERE roles = 'user' ORDER BY student_id")->fetch_all(MYSQLI_ASSOC);
 $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
 ?>
 
@@ -23,9 +23,10 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
-<body class="bg-gradient-to-b from-secondary to-gray-700 h-screen w-screen grid place-content-center font-font2">
+<body class="text-sm md:text-base bg-gradient-to-b from-secondary to-gray-700 h-screen w-screen grid place-content-center font-font2">
 
-    <div class="h-screen w-screen bg-primary md:grid md:grid-cols-5 md:h-[90vh] md:w-[90vw] md:rounded-xl md:bg-opacity-20 md:shadow-lg">
+    <div class="h-screen w-screen bg-primary md:grid md:grid-cols-5 md:h-[90vh] md:w-[90vw] md:rounded-xl md:bg-opacity-20 md:shadow-lg z-200">
+
         <div class="col-span-1 hidden md:block">
             <!-- PROFILE -->
             <div class="profile relative h-full">
@@ -44,6 +45,7 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
             </div>
 
         </div>
+
         <div class="col-span-4 m-2 bg-primary rounded-lg md:m-3 md:ml-0 md:shadow-sm relative">
             <!-- BURGER -->
             <div class="burger-btn cursor-pointer md:hidden absolute right-4 top-4">
@@ -51,6 +53,7 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
                 <div class="burger-line w-5 h-[2px] bg-secondary my-[4px]"></div>
                 <div class="burger-line w-5 h-[2px] bg-secondary my-[4px]"></div>
             </div>
+
             <div id="dashboard" class="content-sections p-4">
                 <p class="font-bold text-2xl text-secondary">Dashboard</p>
                 <div class="summary flex items-center space-x-3 mt-3">
@@ -99,30 +102,34 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
 
             <div id="students" class="content-sections p-4 hidden">
                 <p class="font-bold text-2xl text-secondary">Students</p>
-                <table class="w-full shadow-md mt-8 rounded-lg p-2 overflow-auto">
-                    <thead>
-                        <tr class="bg-secondary rounded-t-lg text-primary">
-                            <th class="text-start p-3">Student</th>
-                            <th class="text-start p-3">Year</th>
-                            <th class="text-start p-3">Course</th>
-                            <th class="text-start p-3">Balance</th>
-                        </tr>
-                    <tbody>
-                        <?php
-                        foreach ($students as $student) {
-                            echo "
-                                        <tr class='border-t border-secondary'>
-                                            <td class='p-3'>" . $student['name'] . "</td>
-                                            <td class='p-3'>" . $student['year'] . "</td>
-                                            <td class='p-3'>" . $student['course'] . "</td>
-                                            <td class='p-3'>" . $student['balance'] . "</td>
-                                        </tr>
-                                    ";
-                        }
-                        ?>
-                    </tbody>
-                    </thead>
-                </table>
+                <div class="mt-8 h-[470px] overflow-auto  shadow-md rounded-lg">
+                    <table class="w-full p-2">
+                        <thead class="sticky z-1 top-0">
+                            <tr class="bg-secondary rounded-t-lg text-primary">
+                                <th class="text-start p-3">Name</th>
+                                <th class="text-start p-3">Username</th>
+                                <th class="text-start p-3">Student ID</th>
+                                <th class="text-start p-3">Balance</th>
+                                <th class="text-start p-3">Action</th>
+                            </tr>
+                        <tbody>
+                            <?php
+                            foreach ($users as $user) {
+                                echo "
+                                            <tr class='border-t border-secondary'>
+                                                <td class='p-3'>" . $user['name'] . "</td>
+                                                <td class='p-3'>" . $user['username'] . "</td>
+                                                <td class='p-3'>" . $user['student_id'] . "</td>
+                                                <td class='p-3'>&#8369;" . $user['balance'] . "</td>
+                                                <td class='p-3'><button class='editBtns rounded-lg text-primary transmission border border-secondary bg-secondary px-3 hover:bg-primary hover:text-secondary py-1' data-id=". $user['student_id'].">Edit Balance<button></td>
+                                            </tr>
+                                        ";
+                            }
+                            ?>
+                        </tbody>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -147,6 +154,28 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 
+    <!-- MODAL -->
+    <div class="relative z-10 hidden text-sm md:text-base" id="modal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/50 transition-opacity grid place-content-center">
+            <div class="relative bg-primary w-[50vw] md:w-[40vw] h-[35vh] rounded-lg">
+                <div class="p-4 flex flex-col">
+                    <div class="text-secondary">
+                        <p class="font-semibold text-xl"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit Balance</p>
+                    </div>
+                    <form class="mt-6 flex flex-col md:flex-row justify-center items-center space-x-2">
+                        <label for="newBalance" class="text-secondary font-semibold">New Balance</label>
+                        <input type="number" name="newBalance" id="newBalance" class="outline-none border border-secondary rounded-sm px-1 py-1 mt-2">
+                    </form>
+                </div>
+                <div class="absolute w-full bottom-0 flex justify-end items-center space-x-3 border bg-gray-50 py-6 px-4 rounded-b-lg">
+                    <button id="edit" class="px-3 py-1 bg-secondary rounded-lg text-primary border border-secondary hover:bg-primary hover:text-secondary transmission">Submit</button>
+                    <button id="cancel" class="px-3 py-1 rounded-lg border hover:bg-gray-50 bg-primary text-secondary transmission">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
         src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -154,12 +183,14 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            // variables
+            let userID;
+
             function getCookieValue(name) {
                 const value = `; ${document.cookie}`;
                 const parts = value.split(`; ${name}=`);
                 if (parts.length === 2) return parts.pop().split(';').shift();
             }
-
             const uname = getCookieValue('username');
             $(".greetings").html(`Admin: ${uname}`);
 
@@ -222,6 +253,46 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
                 $(".nav").removeClass("show");
             });
 
+            // Toggle Edit
+            $(".editBtns").on('click', function() {
+                userID = $(this).data('id');
+                $("#modal").removeClass('hidden');
+                console.log(userID);
+            })
+
+            $("#exit, #cancel").on('click', function(){
+                closeModal();
+            })
+
+            // Edit Balance
+            $("#edit").on('click', function (){
+                let result = confirm("Are you sure to edit this account's balance?");
+                if(result === true){
+                    var request = $.ajax({
+                    url: "editBalance.php",
+                    method: "POST",
+                    data: {
+                        id : userID,
+                        newBalance : $("#newBalance").val()
+                     },
+                    dataType: "html"
+                    });
+
+                    request.done(function( msg ) {
+                        alert(msg);
+                        closeModal();
+                        location.reload();
+                    });
+
+                    request.fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                    });
+                }
+            })
+
+            function closeModal(){
+                $("#modal").addClass('hidden');
+            }
 
         })
 

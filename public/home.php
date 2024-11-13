@@ -1,11 +1,14 @@
 <?php
-session_start();
+    include "./config.php";
+    session_start();
 
-setcookie('username', $_SESSION['username'], time() + 3600, "/");
+    setcookie('username', $_SESSION['username'], time() + 3600, "/");
 
-if(isset($_POST['logout'])){
-    session_destroy();
-}
+    $user = $conn->query("SELECT * FROM users WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
+
+    if(isset($_POST['logout'])){
+        session_destroy();
+    }
 
 ?>
 
@@ -52,7 +55,7 @@ if(isset($_POST['logout'])){
         <!-- BALANCE -->
         <div class="balance relative w-full text-primary md:text-secondary bg-secondary md:bg-primary rounded-2xl p-4 shadow-md">
             <p class="text-xs md:text-sm text-gray-400">Total Tuition Balance</p>
-            <p class="text-2xl font-bold mt-1 md:text-5xl md:mt-4">$5,000</p>
+            <p class="text-2xl font-bold mt-1 md:text-5xl md:mt-4">&#8369;<?php echo $user['balance']?></p>
             <div class="action-btn mt-2 md:mt-8 md:absolute bottom-4">
                 <button id="pay" class="text-xs border border-primary md:border-secondary px-3 py-1 md:px-4 md:py-2 rounded-md transmission hover:bg-primary md:hover:bg-secondary md:hover:text-primary hover:text-secondary mr-2">Pay Now</button>
             </div>
@@ -63,7 +66,7 @@ if(isset($_POST['logout'])){
             <div class="due mt-4 flex items-center justify-between">
                 <div class="amount">
                     <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">$200.00</p>
+                    <p class="text-md">&#8369;200.00</p>
                 </div>
                 <div class="date text-end">
                     <p class="text-green-500 mb-2 text-xs">Due Date:</p>
@@ -73,7 +76,7 @@ if(isset($_POST['logout'])){
             <div class="due mt-4 flex items-center justify-between">
                 <div class="amount">
                     <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">$350.00</p>
+                    <p class="text-md">&#8369;350.00</p>
                 </div>
                 <div class="date text-end">
                     <p class="text-green-500 mb-2 text-xs">Due Date:</p>
@@ -83,7 +86,7 @@ if(isset($_POST['logout'])){
             <div class="due mt-4 flex items-center justify-between">
                 <div class="amount">
                     <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">$350.00</p>
+                    <p class="text-md">&#8369;350.00</p>
                 </div>
                 <div class="date text-end">
                     <p class="text-green-500 mb-2 text-xs">Due Date:</p>
@@ -93,7 +96,7 @@ if(isset($_POST['logout'])){
             <div class="due mt-4 flex items-center justify-between">
                 <div class="amount">
                     <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">$350.00</p>
+                    <p class="text-md">&#8369;350.00</p>
                 </div>
                 <div class="date text-end">
                     <p class="text-green-500 mb-2 text-xs">Due Date:</p>
@@ -111,7 +114,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$400.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;400.00</p>
                     <p class="text-md">07-09-2024 4:30PM</p>
                 </div>
             </div>
@@ -121,7 +124,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$300.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;300.00</p>
                     <p class="text-md">06-09-2024 5:29PM</p>
                 </div>
             </div>
@@ -131,7 +134,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$420.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
                     <p class="text-md">05-09-2024 8:41AM</p>
                 </div>
             </div>
@@ -141,7 +144,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$420.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
                     <p class="text-md">05-09-2024 8:41AM</p>
                 </div>
             </div>
@@ -151,7 +154,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$420.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
                     <p class="text-md">05-09-2024 8:41AM</p>
                 </div>
             </div>
@@ -161,7 +164,7 @@ if(isset($_POST['logout'])){
                     <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
                 </div>
                 <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-$420.00</p>
+                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
                     <p class="text-md">05-09-2024 8:41AM</p>
                 </div>
             </div>
