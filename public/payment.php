@@ -1,5 +1,6 @@
 <?php
 include "./config.php";
+date_default_timezone_set('Asia/Manila');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,7 +12,7 @@ session_start();
 $user = $conn->query("SELECT * FROM users WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
 $user_id = $user['student_id'];
 $oldBalance = $user['balance'];
-$newBlance;
+$date = date('Y-m-d h:i:s A');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $amount = $_POST['amount'];
@@ -100,6 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // Update user balance in database after redirect URL is generated
         $conn->query("UPDATE users SET balance = $oldBalance - $amount WHERE student_id = $user_id");
+
+        // Record transaction
+        $conn->query("INSERT INTO `transactions`(`s_id`, `amount`, `date`) VALUES ('$user_id','$amount','$date')");
 
         // Email Admin
         $mail = new PHPMailer(true);

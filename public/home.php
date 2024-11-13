@@ -1,14 +1,15 @@
 <?php
-    include "./config.php";
-    session_start();
+include "./config.php";
+session_start();
 
-    setcookie('username', $_SESSION['username'], time() + 3600, "/");
+setcookie('username', $_SESSION['username'], time() + 3600, "/");
 
-    $user = $conn->query("SELECT * FROM users WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
+$user = $conn->query("SELECT * FROM users WHERE username = '{$_SESSION['username']}'")->fetch_assoc();
+$transactions = $conn->query("SELECT * FROM transactions WHERE s_id = '{$user['student_id']}'")->fetch_all(MYSQLI_ASSOC);
 
-    if(isset($_POST['logout'])){
-        session_destroy();
-    }
+if (isset($_POST['logout'])) {
+    session_destroy();
+}
 
 ?>
 
@@ -55,118 +56,72 @@
         <!-- BALANCE -->
         <div class="balance relative w-full text-primary md:text-secondary bg-secondary md:bg-primary rounded-2xl p-4 shadow-md">
             <p class="text-xs md:text-sm text-gray-400">Total Tuition Balance</p>
-            <p class="text-2xl font-bold mt-1 md:text-5xl md:mt-4">&#8369;<?php echo $user['balance']?></p>
+            <p class="text-2xl font-bold mt-1 md:text-5xl md:mt-4">&#8369;<?php echo number_format($user['balance'])?></p>
             <div class="action-btn mt-2 md:mt-8 md:absolute bottom-4">
                 <button id="pay" class="text-xs border border-primary md:border-secondary px-3 py-1 md:px-4 md:py-2 rounded-md transmission hover:bg-primary md:hover:bg-secondary md:hover:text-primary hover:text-secondary mr-2">Pay Now</button>
             </div>
         </div>
         <!-- UPCOMING PAYMENTS -->
-        <div class="upcoming bg-primary rounded-2xl p-4 text-secondary w-full text-xs md:text-sm shadow-md overflow-auto">
-            <p class="text-xs md:text-sm text-gray-400">Upcoming Payments</p>
-            <div class="due mt-4 flex items-center justify-between">
-                <div class="amount">
-                    <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">&#8369;200.00</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-green-500 mb-2 text-xs">Due Date:</p>
-                    <p class="text-md">09-09-2024</p>
-                </div>
+        <div class="upcoming h-[200px] md:h-full bg-primary rounded-2xl px-4 text-secondary w-full text-xs md:text-sm shadow-md overflow-auto">
+        <div class="sticky z-1 top-0 px-2 py-4 bg-primary">
+                <p class="text-gray-500">Upcoming Payments</p>
             </div>
-            <div class="due mt-4 flex items-center justify-between">
-                <div class="amount">
-                    <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">&#8369;350.00</p>
+            <div>
+                <div class="due flex items-center justify-between border-t p-2">
+                    <div class="amount">
+                        <p class="text-green-500 mb-2 text-xs">Amount:</p>
+                        <p class="text-md">&#8369;350.00</p>
+                    </div>
+                    <div class="date text-end">
+                        <p class="text-green-500 mb-2 text-xs">Due Date:</p>
+                        <p class="text-md">01-09-2025</p>
+                    </div>
                 </div>
-                <div class="date text-end">
-                    <p class="text-green-500 mb-2 text-xs">Due Date:</p>
-                    <p class="text-md">10-09-2024</p>
+                <div class="due flex items-center justify-between border-t p-2">
+                    <div class="amount">
+                        <p class="text-green-500 mb-2 text-xs">Amount:</p>
+                        <p class="text-md">&#8369;350.00</p>
+                    </div>
+                    <div class="date text-end">
+                        <p class="text-green-500 mb-2 text-xs">Due Date:</p>
+                        <p class="text-md">01-09-2025</p>
+                    </div>
                 </div>
-            </div>
-            <div class="due mt-4 flex items-center justify-between">
-                <div class="amount">
-                    <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">&#8369;350.00</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-green-500 mb-2 text-xs">Due Date:</p>
-                    <p class="text-md">10-09-2024</p>
-                </div>
-            </div>
-            <div class="due mt-4 flex items-center justify-between">
-                <div class="amount">
-                    <p class="text-green-500 mb-2 text-xs">Amount:</p>
-                    <p class="text-md">&#8369;350.00</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-green-500 mb-2 text-xs">Due Date:</p>
-                    <p class="text-md">10-09-2024</p>
+                <div class="due flex items-center justify-between border-t p-2">
+                    <div class="amount">
+                        <p class="text-green-500 mb-2 text-xs">Amount:</p>
+                        <p class="text-md">&#8369;350.00</p>
+                    </div>
+                    <div class="date text-end">
+                        <p class="text-green-500 mb-2 text-xs">Due Date:</p>
+                        <p class="text-md">01-09-2025</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- RECENT TRANSACTIONS -->
-        <div class="recent bg-primary rounded-2xl p-4 text-secondary w-full text-xs md:text-sm shadow-md overflow-auto">
-            <p class="text-xs md:text-sm text-gray-400 ">Recent Transactions</p>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;400.00</p>
-                    <p class="text-md">07-09-2024 4:30PM</p>
-                </div>
+        <div class="recent bg-primary rounded-2xl text-secondary w-full text-xs md:text-sm shadow-md overflow-auto h-[230px] md:h-full px-4">
+            <div class="sticky z-1 top-0 px-2 py-4 bg-primary">
+                <p class="text-gray-500">Recent Transactions</p>
             </div>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;300.00</p>
-                    <p class="text-md">06-09-2024 5:29PM</p>
-                </div>
-            </div>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
-                    <p class="text-md">05-09-2024 8:41AM</p>
-                </div>
-            </div>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
-                    <p class="text-md">05-09-2024 8:41AM</p>
-                </div>
-            </div>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
-                    <p class="text-md">05-09-2024 8:41AM</p>
-                </div>
-            </div>
-            <div class="due mt-4 flex justify-between">
-                <div class="amount">
-                    <p class="text-md">Paid Tuition</p>
-                    <p class="text-xs text-gray-400 mt-1 cursor-pointer">Print Receipt</p>
-                </div>
-                <div class="date text-end">
-                    <p class="text-red-500 mb-2 text-xs">-&#8369;420.00</p>
-                    <p class="text-md">05-09-2024 8:41AM</p>
-                </div>
+            <div>
+                <?php
+                foreach ($transactions as $transaction) {
+                    echo "
+                                <div class='flex justify-between items-center p-2 border-t'>
+                                    <div class='space-y-2'>
+                                        <p class='text-md font-bold'>Paid Tuition Fee</p>
+                                        <p class='text-gray-500 cursor-pointer'>Print Receipt</p>
+                                    </div>
+                                    <div class='text-end space-y-2'>
+                                        <p class='text-red-500 text-md font-bold'>-&#8369;" . $transaction['amount'] . "</p>
+                                        <p class='text-xs text-gray-500'>" . $transaction['date'] . "</p>
+                                    </div>
+                                </div>
+                            ";
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -233,16 +188,18 @@
             });
 
             // PAY
-            $("#pay").on('click', function(){
+            $("#pay").on('click', function() {
                 window.location.replace("http://localhost/hustle/financial_portal/public/payment.php");
             })
 
             // LOGOUT
-            $(".logout").on("click", function(){
+            $(".logout").on("click", function() {
                 $.ajax({
                         url: "index.php",
                         method: 'POST',
-                        data: {logout: true},
+                        data: {
+                            logout: true
+                        },
                     })
                     .done(function(html) {
                         window.location.replace("http://localhost/hustle/financial_portal/public/index.php");

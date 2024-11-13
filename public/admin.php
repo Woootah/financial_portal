@@ -102,7 +102,7 @@ $courses = $conn->query("SELECT * FROM courses")->fetch_all(MYSQLI_ASSOC);
 
             <div id="students" class="content-sections p-4 hidden">
                 <p class="font-bold text-2xl text-secondary">Students</p>
-                <div class="mt-8 h-[470px] overflow-auto  shadow-md rounded-lg">
+                <div class="mt-8 h-[550px] md:h-[470px] overflow-auto  shadow-md rounded-lg">
                     <table class="w-full p-2">
                         <thead class="sticky z-1 top-0">
                             <tr class="bg-secondary rounded-t-lg text-primary">
